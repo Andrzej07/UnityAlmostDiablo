@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074b0237db468014794ba8ffa43eca8a, type: 3}
+  m_Name: Heal
+  m_EditorClassIdentifier: 
+  abilityName: Heal
+  tooltip: 'Mana: 25; Cooldown: 5s
+
+    Heal yourself for 10 + (int) + (2*str).'
+  effects:
+  - {fileID: 11400000, guid: 7ad2266894f7dd445b0e38066de13af9, type: 2}
+  cooldown: 5
+  manaCost: 25
+  targetType: 0
+  range: 0
+  requireLineOfSight: 0

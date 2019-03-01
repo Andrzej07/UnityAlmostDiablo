@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2126bc651b0b6f34fa5e49100b293d73, type: 3}
+  m_Name: Fireball
+  m_EditorClassIdentifier: 
+  abilityName: Fireball
+  tooltip: 'Mana: 5   Cooldown: 3s
+
+    Shoots a projectile towards cursor position. Deals immediate 5 + (int) damage
+    and additional 5 damage over 10 seconds to the first enemy hit.'
+  effects:
+  - {fileID: 11400000, guid: 4baa236320842c0499395698592099f1, type: 2}
+  - {fileID: 11400000, guid: 8c3b7f84d2aaaaa44bfc9aeaa5448f59, type: 2}
+  cooldown: 3
+  manaCost: 5
+  projectile: {fileID: 1366662339938620, guid: 54546675e33784a429402919b4924cbf, type: 2}
+  velocity: 8
+  timeToLive: 15
+  projectileExpireEffects: []
+  destroyProjectileOnHit: 1

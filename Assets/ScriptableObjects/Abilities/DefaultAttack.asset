@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074b0237db468014794ba8ffa43eca8a, type: 3}
+  m_Name: DefaultAttack
+  m_EditorClassIdentifier: 
+  abilityName: Default attack
+  tooltip: 'Mana: 0; Cooldown: 1.5s
+
+    Attack with your bare hands for 5 + (str) damage.'
+  effects:
+  - {fileID: 11400000, guid: 0bdeef3ecaf440e4c8ae6ed9ec59b2fe, type: 2}
+  cooldown: 1.5
+  manaCost: 0
+  targetType: 1
+  range: 1.5
+  requireLineOfSight: 0
