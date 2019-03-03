@@ -19,6 +19,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0bdeef3ecaf440e4c8ae6ed9ec59b2fe, type: 2}
   cooldown: 1.5
   manaCost: 0
+  recoveryTime: 1
   targetType: 1
   range: 1.5
   requireLineOfSight: 0

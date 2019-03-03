@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 208626454215731556}
   - component: {fileID: 65913292730191854}
   m_Layer: 9
-  m_Name: Cube
+  m_Name: Wall
   m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
