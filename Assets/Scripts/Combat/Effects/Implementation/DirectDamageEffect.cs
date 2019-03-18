@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Demo.Characters;
+using Demo.Combat;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Effect/Direct Damage")]
@@ -11,13 +13,13 @@ public class DirectDamageEffect : Effect
 
     public override void ApplyEffect(GameObject source, GameObject target)
     {
-        DefenseController targetDefense = target.GetComponent<DefenseController>();
-        CharacterStatistics stats = source.GetComponent<CharacterStatistics>();
+        IDamageable damageable = target.GetComponent<IDamageable>();
+        ICombatStatistics stats = source.GetComponent<ICombatStatistics>();
         Damage damage = new Damage()
         {
             source = source,
-            amount = damageAmount + stats.strength * strengthCoefficient + stats.intelligence * intelligenceCoefficient
+            amount = damageAmount + stats.Strength * strengthCoefficient + stats.Intelligence * intelligenceCoefficient
         };
-        targetDefense.ReceiveDamage(damage);
+        damageable.ReceiveDamage(damage);
     }
 }

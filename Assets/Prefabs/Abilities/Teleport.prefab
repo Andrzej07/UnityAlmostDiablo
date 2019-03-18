@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1312216877504268}
+  m_IsPrefabAsset: 1
+--- !u!1 &1312216877504268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4731051999617780}
+  - component: {fileID: 114221519711271386}
+  - component: {fileID: 114085767248126844}
+  - component: {fileID: 114765734605722380}
+  - component: {fileID: 114073352017112390}
+  - component: {fileID: 114278763645339288}
+  - component: {fileID: 114084294957553148}
+  - component: {fileID: 114722263507587966}
+  - component: {fileID: 114565863022753166}
+  - component: {fileID: 114897064966842576}
+  m_Layer: 0
+  m_Name: Teleport
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4731051999617780
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1312216877504268}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114073352017112390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1312216877504268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9c6027eb700ec46a8b852e9444c208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 10
+--- !u!114 &114084294957553148
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1312216877504268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027ce538c07638749a2ea23dcef4bee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114085767248126844
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1312216877504268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0c31d5799181040908ea654406a735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raycastLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  groundMarker: {fileID: 0}
+--- !u!114 &114221519711271386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1312216877504268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83b4d1db79a77a74fae82218a6c3c9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  abilityName: Teleport
+  abilityTooltip: Teleport to targeted location.
+  effects:
+  - {fileID: 11400000, guid: 515798f3d0c060e4aab8c87c4ea45ee5, type: 2}
+--- !u!114 &114278763645339288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1312216877504268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7527bc8e3a240c47b735bbe1830d54a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 20
+--- !u!114 &114565863022753166
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1312216877504268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82deb6098e74754db7ab476091fe6ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 324
+--- !u!114 &114722263507587966
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1312216877504268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef1ec2b35e76e040838734482b62fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 323
+--- !u!114 &114765734605722380
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1312216877504268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d2c4ef6f2ff10d42a0d6079d3ba14c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manaCost: 25
+--- !u!114 &114897064966842576
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1312216877504268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01d9bb71735084b4a82c5f57ae5932b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  secondsDelay: 0

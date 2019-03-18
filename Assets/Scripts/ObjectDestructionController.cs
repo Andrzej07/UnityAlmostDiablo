@@ -1,22 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Demo.Combat;
 using UnityEngine;
 
 public class ObjectDestructionController : MonoBehaviour
 {
     public bool isScheduledForDestruction = false;
     private List<LingeringEffectContainer> effects;
+    public event Action<GameObject> SafeToDestroyEvent;
 
-    public delegate void OnSafeToDestroy(GameObject gameObject);
-    public event OnSafeToDestroy onSafeToDestroy;
+    IDamageable damageable;
+    LingeringEffectsController effectsController;
 
-    // Use this for initialization
     void Awake()
     {
         effects = new List<LingeringEffectContainer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -33,8 +34,16 @@ public class ObjectDestructionController : MonoBehaviour
         {
             if (effects.Find(item => item == effectContainer) == null)
             {
-                effectContainer.target.GetComponent<LingeringEffectsController>().lingeringEffectExpire += OnEffectExpire;
-                effectContainer.target.GetComponent<DefenseController>().deathDelegate += OnTargetDeath;
+                effectsController = effectContainer.target.GetComponent<LingeringEffectsController>();
+                if (effectsController != null)
+                {
+                    effectsController.EffectExpireEvent += OnEffectExpire;
+                }
+                damageable = effectContainer.target.GetComponent<IDamageable>();
+                if (damageable != null)
+                {
+                    damageable.DeathEvent += OnTargetDeath;
+                }
             }
             effects.Add(effectContainer);
         }
@@ -54,24 +63,24 @@ public class ObjectDestructionController : MonoBehaviour
 
     private void Notify()
     {
-        if (IsSafeToDestroy() && onSafeToDestroy != null)
+        if (IsSafeToDestroy() && SafeToDestroyEvent != null)
         {
-            onSafeToDestroy(this.gameObject);
+            SafeToDestroyEvent(this.gameObject);
         }
     }
 
     public static void Destroy2(GameObject gameObject)
-    {        
+    {
         ObjectDestructionController odc = gameObject.GetComponent<ObjectDestructionController>();
         if (odc == null || odc.IsSafeToDestroy())
         {
             Destroy(gameObject);
         }
-        else
+        else if (!odc.isScheduledForDestruction)
         {
             odc.isScheduledForDestruction = true;
-            odc.onSafeToDestroy += Destroy;
-            for(int i = 0; i < gameObject.transform.childCount; i++) 
+            odc.SafeToDestroyEvent += Destroy;
+            for (int i = 0; i < gameObject.transform.childCount; i++)
             {
                 gameObject.transform.GetChild(i).gameObject.SetActive(false);
             }
@@ -81,6 +90,18 @@ public class ObjectDestructionController : MonoBehaviour
                 component.enabled = false;
             }
             odc.enabled = true;
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (damageable != null)
+        {
+            damageable.DeathEvent -= OnTargetDeath;
+        }
+        if (effectsController != null)
+        {
+            effectsController.EffectExpireEvent -= OnEffectExpire;
         }
     }
 }

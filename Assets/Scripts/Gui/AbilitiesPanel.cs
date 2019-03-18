@@ -2,65 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Demo.Abilities;
+using System.Collections.ObjectModel;
 
-public class AbilitiesPanel : MonoBehaviour {
+public class AbilitiesPanel : MonoBehaviour
+{
 
-    public AbilityCaster playerAbilities;
-    public Text[] abilityLabels;
-    public Text[] cooldownLabels;
+    public AbilitiesController playerAbilities;
+    public AbilitySlot[] abilitySlots;
 
     private void Awake()
     {
-        playerAbilities.onAbilitiesChange += UpdateAbilityLabels;
+        playerAbilities.AbilitiesChangeEvent += OnAbilitiesChangedEvent;
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        UpdateCooldowns();
-	}
-
-    void UpdateAbilityLabels()
+    void OnAbilitiesChangedEvent()
     {
-        for(int i = 0; i < abilityLabels.Length; i++)
+        ReadOnlyCollection<Ability> abilities = playerAbilities.abilities;
+        for (int i = 0; i < abilities.Count && i < abilitySlots.Length; i++)
         {
-            Tooltip tooltip = abilityLabels[i].gameObject.GetComponent<Tooltip>();            
-            if (i < playerAbilities.abilities.Count)
-            {
-                abilityLabels[i].text = playerAbilities.abilities[i].abilityName;
-                if (tooltip != null)
-                {
-                    tooltip.text = playerAbilities.abilities[i].tooltip;
-                }
-            } else
-            {
-                abilityLabels[i].text = "No ability assigned";
-                if(tooltip != null)
-                {
-                    tooltip.text = null;
-                }
-            }
+            abilitySlots[i].SlotAbility(abilities[i]);
         }
     }
 
-    void UpdateCooldowns()
-    {
-        for (int i = 0; i < abilityLabels.Length; i++)
-        {
-            if (i < playerAbilities.abilities.Count)
-            {
-                cooldownLabels[i].enabled = true;
-                cooldownLabels[i].text =  playerAbilities.GetRemainingCooldown(playerAbilities.abilities[i]).ToString("0.#");
-            }
-            else
-            {
-                cooldownLabels[i].enabled = false;
-            }
-        }
-            
-    }
 }

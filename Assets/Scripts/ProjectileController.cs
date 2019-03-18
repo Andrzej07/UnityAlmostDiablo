@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileController : MonoBehaviour {
+public class ProjectileController : MonoBehaviour
+{
 
     public delegate void OnProjectileTriggerEnterDelegate(Collider other);
-    public OnProjectileTriggerEnterDelegate onProjectileTriggerEnter;
+    public event OnProjectileTriggerEnterDelegate onProjectileTriggerEnter;
 
     public delegate void OnProjectileEndOfLifeDelegate();
-    public OnProjectileEndOfLifeDelegate onProjectileEndOfLife;
+    public event OnProjectileEndOfLifeDelegate onProjectileEndOfLife;
 
     [HideInInspector]
     public float timeToLive;
@@ -16,26 +17,45 @@ public class ProjectileController : MonoBehaviour {
     public float velocity;
     [HideInInspector]
     public Vector3 direction;
+    [HideInInspector]
+    public GameObject source;
+    public bool destroyOnHit;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    public Effect[] effects;
+
+    void Start()
+    {
+        
+    }
+
+    void Update()
+    {
         transform.position += velocity * direction * Time.deltaTime;
         timeToLive -= Time.deltaTime;
-        if(timeToLive < 0)
+        if (timeToLive < 0)
         {
             if (onProjectileEndOfLife != null)
                 onProjectileEndOfLife();
             Destroy(gameObject);
         }
-	}
+    }
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Projectile hit: " + other.gameObject.name);
+        if (GameController.instance.AreHostile(source, other.gameObject))
+        {
+            foreach (Effect effect in effects)
+                effect.ApplyEffect(source, other.gameObject);
+            if (destroyOnHit)
+                Destroy(gameObject);
+        }
+        else if (other.gameObject.tag == "Terrain")
+        {
+            Destroy(gameObject);
+        }
+
+
         if (onProjectileTriggerEnter != null)
             onProjectileTriggerEnter(other);
     }

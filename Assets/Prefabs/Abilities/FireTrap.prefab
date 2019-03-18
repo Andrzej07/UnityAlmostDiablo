@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1627192787472088}
+  m_IsPrefabAsset: 1
+--- !u!1 &1627192787472088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4703803533507256}
+  - component: {fileID: 114843787626361080}
+  - component: {fileID: 114671310372171986}
+  - component: {fileID: 114951696028748986}
+  - component: {fileID: 114683951348503736}
+  - component: {fileID: 114842256707752744}
+  - component: {fileID: 114217810512549992}
+  - component: {fileID: 114775773713075264}
+  - component: {fileID: 114754001103983064}
+  m_Layer: 0
+  m_Name: FireTrap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4703803533507256
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1627192787472088}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114217810512549992
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1627192787472088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027ce538c07638749a2ea23dcef4bee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114671310372171986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1627192787472088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0c31d5799181040908ea654406a735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raycastLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  groundMarker: {fileID: 0}
+--- !u!114 &114683951348503736
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1627192787472088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9c6027eb700ec46a8b852e9444c208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 1
+--- !u!114 &114754001103983064
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1627192787472088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82deb6098e74754db7ab476091fe6ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 324
+--- !u!114 &114775773713075264
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1627192787472088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef1ec2b35e76e040838734482b62fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 323
+--- !u!114 &114842256707752744
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1627192787472088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a0b3a41534e5b4fb6e1c256c204372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114843787626361080
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1627192787472088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83b4d1db79a77a74fae82218a6c3c9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  abilityName: Fire trap
+  abilityTooltip: Place a fire trap at targeted location.
+  effects:
+  - {fileID: 11400000, guid: dd12e643c5f634540bdff582db9078d9, type: 2}
+--- !u!114 &114951696028748986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1627192787472088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d2c4ef6f2ff10d42a0d6079d3ba14c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manaCost: 10

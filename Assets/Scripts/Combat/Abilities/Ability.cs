@@ -1,59 +1,145 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class Ability : ScriptableObject
+namespace Demo.Abilities
 {
-
-    public string abilityName;
-    [TextArea(3, 10)]
-    public string tooltip;
-    public Effect[] effects;
-    public float cooldown;
-    public float manaCost;
-    public float recoveryTime;
-
-    public bool Use(GameObject source, GameObject target)
+    public abstract class Ability : MonoBehaviour
     {
-        if (IsInPosition(source, target))
+        GameObject _source;
+        public GameObject source
         {
-            if (TriggerEffect(source, target))
+            get
             {
-                AbilityCaster abilityCaster = source.GetComponent<AbilityCaster>();
-                TriggerManaCost(abilityCaster);
-                TriggerCooldown(abilityCaster);
-                Animator animator = source.GetComponentInChildren<Animator>();
-                animator.SetTrigger("Attack");
-                return true;
+                if (_source == null)
+                {
+                    _source = GetComponentInParent<AbilitiesController>().gameObject;
+                }
+                return _source;
             }
         }
-        else
+        public string abilityName;
+        [TextArea(3, 10)]
+        public string abilityTooltip;
+
+        string fullTooltip;
+        public string Tooltip
         {
-            GetInPosition(source, target);
+            get
+            {
+                if (string.IsNullOrEmpty(fullTooltip))
+                {
+                    BuildTooltip();
+                }
+                return fullTooltip;
+            }
         }
-        return false;
-    }
+        public event Action DeactivatedEvent;
 
-    protected abstract bool TriggerEffect(GameObject source, GameObject target);
+        protected ICastRequirement[] _requirements;
+        protected ICastRequirement[] requirements
+        {
+            get
+            {
+                if (_requirements == null)
+                {
+                    _requirements = GetComponents<ICastRequirement>();
+                }
+                return _requirements;
+            }
+        }
+        protected IPostCastAction[] actions;
 
-    protected void TriggerCooldown(AbilityCaster abilityCaster)
-    {
-        abilityCaster.TriggerCooldown(this);
-    }
+        protected Dictionary<ICastRequirement, IRequirementSatisfier> _satisfiers;
+        protected Dictionary<ICastRequirement, IRequirementSatisfier> satisfiers
+        {
+            get
+            {
+                if (_satisfiers == null)
+                {
+                    _satisfiers = new Dictionary<ICastRequirement, IRequirementSatisfier>();
+                    IRequirementSatisfier[] satisfiers = GetComponents<IRequirementSatisfier>();
+                    foreach (IRequirementSatisfier satisfier in satisfiers)
+                    {
+                        _satisfiers.Add(satisfier.requirement, satisfier);
+                    }
+                }
+                return _satisfiers;
+            }
+        }
 
-    protected void TriggerManaCost(AbilityCaster abilityCaster)
-    {
-        abilityCaster.TriggerManaCost(this);
-    }
+        protected void Awake()
+        {
+            IAbilityTrigger[] triggers = GetComponents<IAbilityTrigger>();
+            foreach (IAbilityTrigger trigger in triggers)
+            {
+                trigger.AbilityTriggerEvent += CheckAndCast;
+            }
+            actions = GetComponents<IPostCastAction>();
+        }
 
-    protected abstract void GetInPosition(GameObject source, GameObject target);
+        void CheckAndCast()
+        {
+            foreach (ICastRequirement requirement in requirements)
+            {
+                if (!requirement.IsSatisfied())
+                {
+                    if (satisfiers.ContainsKey(requirement))
+                    {
+                        Action onRequirementSatisfiedEvent = null;
+                        onRequirementSatisfiedEvent = () =>
+                        {
+                            satisfiers[requirement].RequirementSatisfiedEvent -= onRequirementSatisfiedEvent;
+                            CheckAndCast();
+                        };
+                        satisfiers[requirement].RequirementSatisfiedEvent += onRequirementSatisfiedEvent;
+                        satisfiers[requirement].Satisfy();
+                    }
+                    return;
+                }
+            }
+            CastAbility();
+            foreach (IPostCastAction action in actions)
+            {
+                action.Perform();
+            }
+        }
 
-    public abstract bool IsInPosition(GameObject source, GameObject target);
+        void OnDisable()
+        {
+            if (DeactivatedEvent != null)
+            {
+                DeactivatedEvent();
+            }
+        }
 
-    // TODO: Generate tooltip based on attached effects
-    public string GetTooltip()
-    {
-        return null;
+        public bool CheckRequirements()
+        {
+            foreach (ICastRequirement requirement in requirements)
+            {
+                if (!satisfiers.ContainsKey(requirement) && !requirement.IsSatisfied())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        void BuildTooltip()
+        {
+            ITooltipPart[] parts = GetComponents<ITooltipPart>();
+            Array.Sort(parts, (a, b) => a.Order.CompareTo(b.Order));
+            fullTooltip = "";
+            foreach (ITooltipPart part in parts)
+            {
+                fullTooltip += String.Format("{0}\n", part.TooltipPart);
+            }
+            fullTooltip += abilityTooltip;
+        }
+
+        protected abstract void CastAbility();
     }
 }

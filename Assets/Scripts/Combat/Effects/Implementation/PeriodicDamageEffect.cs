@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Demo.Combat;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Effect/Periodic Damage")]
@@ -14,7 +15,7 @@ public class PeriodicDamageEffect : PeriodicEffect
 
     public override void Tick(GameObject source, GameObject target)
     {
-        DefenseController defense = target.GetComponent<DefenseController>();
+        IDamageable defense = target.GetComponent<IDamageable>();
         Damage damage = new Damage()
         {
             amount = damageAmount,

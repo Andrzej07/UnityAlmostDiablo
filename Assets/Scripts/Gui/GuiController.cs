@@ -3,27 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GuiController : MonoBehaviour {
-    public GameObject gameOverPopup;
-    public GameObject statUpPanel;
-    public GameObject tooltipPanel;
-    public Text errorText;
-
-    private const float errorTimeout = 2;
-    private float errorTimeRemaining = 0;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (errorTimeRemaining > 0)
-            errorTimeRemaining -= Time.deltaTime;
-        else
-            errorText.text = null;
-	}
+public class GuiController : MonoBehaviour
+{
+    [SerializeField]
+    GameObject gameOverPopup;
+    [SerializeField]
+    GameObject statUpPanel;
+    [SerializeField]
+    GameObject tooltipPanel;
+    [SerializeField]
+    CombatTextSpawner combatTextSpawner;
+    public CombatTextSpawner CombatTextSpawner
+    {
+        get
+        {
+            return combatTextSpawner;
+        }
+    }
 
     public void ShowGameOverPopup()
     {
@@ -51,9 +47,4 @@ public class GuiController : MonoBehaviour {
         tooltipPanel.SetActive(false);
     }
 
-    public void DisplayError(string text)
-    {
-        errorText.text = text;
-        errorTimeRemaining = errorTimeout;
-    }
 }

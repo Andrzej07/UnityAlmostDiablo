@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: GrantFireball
   m_EditorClassIdentifier: 
   experienceBonus: 5
-  ability: {fileID: 11400000, guid: ec5a4a99a382eed49a4da5a986aa1c86, type: 2}
+  ability: {fileID: 114287574020229600, guid: 3672c03f8456aa24981c637f124ed6db, type: 2}

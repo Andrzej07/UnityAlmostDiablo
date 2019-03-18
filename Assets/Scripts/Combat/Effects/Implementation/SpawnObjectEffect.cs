@@ -8,7 +8,6 @@ public class SpawnObjectEffect : Effect
     public GameObject objectToSpawn;
     public float timeToLive;
 
-    private GameObject instance;
     private GameObject parent;
 
     void OnEnable()
@@ -20,14 +19,15 @@ public class SpawnObjectEffect : Effect
 
     public override void ApplyEffect(GameObject source, GameObject target)
     {
-        instance = Instantiate(objectToSpawn, parent.transform);
+        GameObject instance = Instantiate(objectToSpawn, parent.transform);
         instance.transform.position = target.transform.position;
-        GameController.instance.StartCoroutine(DestroyAfterDelay());
+        GameController.instance.StartCoroutine(DestroyAfterDelay(instance));
     }
 
-    IEnumerator DestroyAfterDelay()
+    IEnumerator DestroyAfterDelay(GameObject instance)
     {
+        GameObject instanceCache = instance;
         yield return new WaitForSeconds(timeToLive);
-        ObjectDestructionController.Destroy2(instance);
+        ObjectDestructionController.Destroy2(instanceCache);
     }
 }

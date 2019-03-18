@@ -1,23 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Demo.Combat;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour
+{
 
     public static GameController instance;
+    public GuiController guiController;
 
-    public delegate void OnWaveChangeDelegate();
-    public event OnWaveChangeDelegate waveChangeDelegate;
+    public event Action waveChangeEvent;
 
-    public delegate void OnEnemyCountChanged(int count);
-    public event OnEnemyCountChanged enemyCountChanged;
-
-    public delegate void OnEnemySpawned();
-    public OnEnemySpawned enemySpawnedDelegate;
-
-    public delegate void OnEnemyDeath(GameObject enemy);
-    public OnEnemyDeath enemyDeathDelegate;
+    public event Action<int> EnemyCountChangedEvent;
 
     public MonsterSpawnerController monsterSpawnerController;
     [HideInInspector]
@@ -25,7 +21,7 @@ public class GameController : MonoBehaviour {
 
     private Transform enemies;
     [HideInInspector]
-    public int enemyCount;    
+    public int enemyCount;
 
     public bool AreHostile(GameObject obj1, GameObject obj2)
     {
@@ -35,35 +31,22 @@ public class GameController : MonoBehaviour {
     private void Awake()
     {
         instance = this;
-        enemySpawnedDelegate += delegate ()
-        {
-            enemyCount++;
-            if (enemyCountChanged != null)
-                enemyCountChanged(enemyCount);
-        };
-        enemyDeathDelegate += delegate (GameObject enemy)
-        {
-            enemyCount--;
-            if (enemyCount == 0 && monsterSpawnerController.waitingToSpawn == 0)
-            {
-                NewWave();
-            }
-            if (enemyCountChanged != null)
-                enemyCountChanged(enemyCount);
-        };
+        monsterSpawnerController.MonsterSpawnedEvent += OnMonsterSpawnedEvent;
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         SpawnWave();
         enemies = GameObject.Find("Enemies").transform;
         enemyCount = enemies.childCount;
-        if(enemyCountChanged != null)
-            enemyCountChanged(enemyCount);
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        if (EnemyCountChangedEvent != null)
+            EnemyCountChangedEvent(enemyCount);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
     }
 
@@ -78,8 +61,8 @@ public class GameController : MonoBehaviour {
     void NewWave()
     {
         waveNumber++;
-        if(waveChangeDelegate != null)
-            waveChangeDelegate();
+        if (waveChangeEvent != null)
+            waveChangeEvent();
         SpawnWave();
     }
 
@@ -88,5 +71,25 @@ public class GameController : MonoBehaviour {
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
         Time.timeScale = 1;
+    }
+
+    void OnMonsterSpawnedEvent(GameObject newMonster)
+    {
+        enemyCount++;
+        if (EnemyCountChangedEvent != null)
+            EnemyCountChangedEvent(enemyCount);
+
+        newMonster.GetComponent<IDamageable>().DeathEvent += OnMonsterDeathEvent;
+    }
+
+    void OnMonsterDeathEvent(GameObject deadMonster)
+    {
+        enemyCount--;
+        if (enemyCount == 0 && monsterSpawnerController.waitingToSpawn == 0)
+        {
+            NewWave();
+        }
+        if (EnemyCountChangedEvent != null)
+            EnemyCountChangedEvent(enemyCount);
     }
 }

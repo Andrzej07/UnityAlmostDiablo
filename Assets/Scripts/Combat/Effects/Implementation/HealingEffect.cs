@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Demo.Characters;
+using Demo.Combat;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Effect/Healing")]
@@ -12,17 +14,18 @@ public class HealingEffect : Effect
 
     public override void ApplyEffect(GameObject source, GameObject target)
     {
-        DefenseController targetDefense = target.GetComponent<DefenseController>();
-        CharacterStatistics stats = target.GetComponent<CharacterStatistics>();
+        IHealable healable = target.GetComponent<IHealable>();
+        ICombatStatistics stats = target.GetComponent<ICombatStatistics>();
         Healing healing = new Healing();
         healing.source = source;
-        if(percentageHeal)
+        if (percentageHeal)
         {
-            healing.amount = healAmount / 100 * stats.maxHealth;
-        } else
-        {
-            healing.amount = healAmount + stats.strength * strengthCoefficient + stats.intelligence * intelligenceCoefficient;
+            healing.amount = healAmount / 100 * stats.Health.MaxHealth;
         }
-        targetDefense.ReceiveHealing(healing);
+        else
+        {
+            healing.amount = healAmount + stats.Strength * strengthCoefficient + stats.Intelligence * intelligenceCoefficient;
+        }
+        healable.ReceiveHealing(healing);
     }
 }

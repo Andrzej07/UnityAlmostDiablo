@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Damage {
+namespace Demo.Combat
+{
+    public class Damage
+    {
 
-    public GameObject source;
-    public float amount;
+        public GameObject source;
+        public float amount;
 
-    // TODO: type, armor pen., etc.
+        // TODO: type, armor pen., etc.
+    }
 }

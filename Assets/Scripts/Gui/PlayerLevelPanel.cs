@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Demo.Characters;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerLevelPanel : MonoBehaviour {
+public class PlayerLevelPanel : MonoBehaviour
+{
 
     public GameObject labelPrefab;
     public PlayerLevelController playerLevelController;

@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Demo.Characters;
 using UnityEngine;
 using UnityEngine.AI;
 
 [CreateAssetMenu(menuName = "Elite Monster Effect/Increase stats")]
-public class IncreaseStatsEffect : EliteMonsterEffect {
+public class IncreaseStatsEffect : EliteMonsterEffect
+{
     public int strength;
     public int intelligence;
     public int armor;
@@ -15,15 +17,13 @@ public class IncreaseStatsEffect : EliteMonsterEffect {
     public override void ApplyEffect(GameObject source, GameObject target)
     {
         base.ApplyEffect(source, target);
-        CharacterStatistics cs = target.GetComponent<CharacterStatistics>();
-        cs.maxMana += mana;
-        cs.mana += mana;
-        cs.maxHealth += health;
-        cs.health += health;
-        cs.armor += armor;
-        cs.strength += strength;
-        cs.intelligence += intelligence;
-        cs.manaRegenerationRate += manaRegen;
+        ICombatStatistics cs = target.GetComponent<ICombatStatistics>();
+        cs.Mana.IncreaseMaxAndCurrent(mana);
+        cs.Health.IncreaseMaxAndCurrent(health);
+        cs.Armor += armor;
+        cs.Strength += strength;
+        cs.Intelligence += intelligence;
+        cs.Mana.RegenerationRate += manaRegen;
         NavMeshAgent agent = target.GetComponent<NavMeshAgent>();
         agent.speed += speed;
     }

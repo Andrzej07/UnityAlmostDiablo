@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Demo.Characters;
 using UnityEngine;
 
 public class EliteMonsterEffect : Effect
@@ -11,7 +12,8 @@ public class EliteMonsterEffect : Effect
         IncreseExperienceGain(target);
     }
 
-    void IncreseExperienceGain(GameObject target) {
-        target.GetComponent<MonsterController>().experienceReward += experienceBonus;
-    }    
+    void IncreseExperienceGain(GameObject target)
+    {
+        target.GetComponent<IExperienceReward>().ExperienceAmount += experienceBonus;
+    }
 }

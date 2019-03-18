@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,11 +8,8 @@ public class LingeringEffectsController : MonoBehaviour
 
     [SerializeField]
     private List<LingeringEffectContainer> lingeringEffects;
-
     private DefenseController defenseController;
-
-    public delegate void OnLingeringEffectExpire(LingeringEffectContainer lingeringEffectContainer);
-    public OnLingeringEffectExpire lingeringEffectExpire;
+    public Action<LingeringEffectContainer> EffectExpireEvent;
 
     private void Awake()
     {
@@ -20,13 +18,11 @@ public class LingeringEffectsController : MonoBehaviour
         defenseController = GetComponent<DefenseController>();
     }
 
-    // Use this for initialization
     void Start()
     {
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (defenseController.isDead)
@@ -38,26 +34,14 @@ public class LingeringEffectsController : MonoBehaviour
             {
                 lingeringEffects.Remove(le);
                 le.OnRemove();
-                if (lingeringEffectExpire != null)
-                    lingeringEffectExpire(le);
+                if (EffectExpireEvent != null)
+                    EffectExpireEvent(le);
             }
             else if (le is PeriodicEffectContainer)
             {
                 ((PeriodicEffectContainer)le).Update(Time.deltaTime);
             }
         }
-        /* foreach (PeriodicEffectContainer pe in periodicEffects.ToArray()) {
-            pe.UpdateDuration(Time.deltaTime);
-            if(pe.IsFinished())
-            {
-                periodicEffects.Remove(pe);
-                pe.OnRemove();
-            } 
-            else 
-            {
-                pe.Update(Time.deltaTime);
-            }
-        }*/
     }
 
     public void AddEffect(LingeringEffect lingeringEffect, GameObject source)

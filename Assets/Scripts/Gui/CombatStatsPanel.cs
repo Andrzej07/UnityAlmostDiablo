@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Demo.Characters;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CombatStatsPanel : MonoBehaviour {
+public class CombatStatsPanel : MonoBehaviour
+{
     public GameObject labelPrefab;
     public GameObject target;
 
-    private CharacterStatistics stats;
+    private ICombatStatistics stats;
     private Text health;
     private Text mana;
     private Text armor;
@@ -31,33 +33,34 @@ public class CombatStatsPanel : MonoBehaviour {
         OnDisable();
     }
 
-    void OnEnable () {
+    void OnEnable()
+    {
         if (target != null)
         {
-            stats = target.GetComponent<CharacterStatistics>();
+            stats = target.GetComponent<ICombatStatistics>();
             UpdateStats();
-            stats.statsChangeDelegate += UpdateStats;
+            stats.StatsChangeEvent += UpdateStats;
             foreach (Text label in labels)
             {
                 label.enabled = true;
             }
         }
-    }	
+    }
 
     private void UpdateStats()
     {
-        strength.text = string.Format("Strength: {0}", stats.strength);
-        intelligence.text = string.Format("Intelligence: {0}", stats.intelligence);
-        health.text = string.Format("Health: {0} / {1}", stats.health, stats.maxHealth);
-        mana.text = string.Format("Mana: {0} / {1}", Mathf.RoundToInt(stats.mana), Mathf.RoundToInt(stats.maxMana));
-        armor.text = string.Format("Armor: {0}", stats.armor);       
+        strength.text = string.Format("Strength: {0}", stats.Strength);
+        intelligence.text = string.Format("Intelligence: {0}", stats.Intelligence);
+        health.text = string.Format("Health: {0} / {1}", stats.Health.CurrentHealth, stats.Health.MaxHealth);
+        mana.text = string.Format("Mana: {0} / {1}", Mathf.RoundToInt(stats.Mana.CurrentMana), Mathf.RoundToInt(stats.Mana.MaxMana));
+        armor.text = string.Format("Armor: {0}", stats.Armor);
     }
 
     private void OnDisable()
     {
         if (stats != null)
         {
-            stats.statsChangeDelegate -= UpdateStats;
+            stats.StatsChangeEvent -= UpdateStats;
         }
         foreach (Text label in labels)
         {

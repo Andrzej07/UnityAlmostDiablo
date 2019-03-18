@@ -1,75 +1,60 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Demo.Characters;
+using Demo.Combat;
 using UnityEngine;
 
-public class DefenseController : MonoBehaviour
+public class DefenseController : MonoBehaviour, IDamageable, IHealable
 {
-
-    public delegate void OnReceiveDamageDelegate();
-    public OnReceiveDamageDelegate receiveDamageDelegate;
-
-    public delegate void OnReceiveHealingDelegate();
-    public OnReceiveHealingDelegate receiveHealingDelegate;
-
-    public delegate void OnDeathDelegate(GameObject gameObject);
-    public OnDeathDelegate deathDelegate;
-
     [HideInInspector]
     public bool isDead;
 
-    private CharacterStatistics characterStatistics;
-    private Animator animator;
+    private ICombatStatistics characterStatistics;
     private CombatTextSpawner combatTextSpawner;
+
+    public event Action<GameObject> DeathEvent;
+    public event Action<Damage> ReceiveDamageEvent;
+    public event Action<Healing> ReceiveHealingEvent;
 
     private void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
-        characterStatistics = GetComponent<CharacterStatistics>();
+        characterStatistics = GetComponent<ICombatStatistics>();
         isDead = false;
     }
 
     void Start()
     {
-        combatTextSpawner = GameObject.Find("Combat Text").GetComponent<CombatTextSpawner>();
-    }
-
-    void Update()
-    {
-
+        characterStatistics.Health.HealthDepletedEvent += OnHealthDepletedEvent;
+        combatTextSpawner = GameController.instance.guiController.CombatTextSpawner;
     }
 
     public void ReceiveDamage(Damage damage)
     {
         if (isDead)
             return;
-        int finalDamageValue = Mathf.RoundToInt(Mathf.Max(1, damage.amount * (100 - characterStatistics.armor) / 100));
+        if (ReceiveDamageEvent != null)
+            ReceiveDamageEvent(damage);
+        int finalDamageValue = Mathf.RoundToInt(Mathf.Max(1, damage.amount * (100 - characterStatistics.Armor) / 100));
         Debug.Log(gameObject.name + " received " + finalDamageValue + " damage from " + damage.source.name);
-        characterStatistics.health -= finalDamageValue;
+        characterStatistics.Health.DealDamage(finalDamageValue);
         combatTextSpawner.SpawnText(transform, finalDamageValue);
-        if (characterStatistics.statsChangeDelegate != null)
-            characterStatistics.statsChangeDelegate();
-        if (characterStatistics.health <= Mathf.Epsilon)
-        {
-            characterStatistics.health = 0;
-            isDead = true;
-            animator.SetBool("Dead", true);
-            if (deathDelegate != null)
-                deathDelegate(gameObject);
-        }
-        else
-        {
-            animator.SetTrigger("Damaged");
-        }
     }
 
     public void ReceiveHealing(Healing healing)
     {
         if (isDead)
             return;
-        int finalHealingValue = Mathf.RoundToInt(Mathf.Min(healing.amount, characterStatistics.maxHealth - characterStatistics.health));
-        characterStatistics.health += finalHealingValue;
-        if (characterStatistics.statsChangeDelegate != null)
-            characterStatistics.statsChangeDelegate();
-        combatTextSpawner.SpawnText(transform, Mathf.RoundToInt(finalHealingValue), Color.green);
+        if (ReceiveHealingEvent != null)
+            ReceiveHealingEvent(healing);
+        int finalHealingValue = characterStatistics.Health.RestoreHealth((int)healing.amount);
+        combatTextSpawner.SpawnText(transform, finalHealingValue, Color.green);
+    }
+
+    void OnHealthDepletedEvent()
+    {
+        isDead = true;
+        if (DeathEvent != null)
+            DeathEvent(gameObject);
     }
 }

@@ -1,26 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Demo.Abilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
-    public string text;
+public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
+    [SerializeField]
+    string text;
 
     GuiController guiController;
 
-    // Use this for initialization
-    void Start () {
-        guiController = GameObject.Find("GUI").GetComponent<GuiController>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Awake()
+    {
+        AbilitySlot slot = GetComponent<AbilitySlot>();
+        slot.AbilitySlottedEvent += OnAbilitySlottedEvent;
+    }
+
+    void Start()
+    {
+        guiController = GameController.instance.guiController;
+    }
+
+    void OnAbilitySlottedEvent(Ability ability)
+    {
+        text = ability.Tooltip;
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(text != null)
+        if (text != null)
             guiController.ShowTooltip(text);
     }
 

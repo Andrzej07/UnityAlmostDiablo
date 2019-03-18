@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1986805788691272}
+  m_IsPrefabAsset: 1
+--- !u!1 &1986805788691272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4259363194586074}
+  - component: {fileID: 114441345491401830}
+  - component: {fileID: 114165855854261102}
+  - component: {fileID: 114108937560027790}
+  - component: {fileID: 114066166891878916}
+  - component: {fileID: 114860833782175640}
+  - component: {fileID: 114117612810963828}
+  - component: {fileID: 114363433265744454}
+  m_Layer: 0
+  m_Name: Fireball
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4259363194586074
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986805788691272}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114066166891878916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986805788691272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c9c6027eb700ec46a8b852e9444c208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 5
+--- !u!114 &114108937560027790
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986805788691272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d2c4ef6f2ff10d42a0d6079d3ba14c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manaCost: 5
+--- !u!114 &114117612810963828
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986805788691272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a0b3a41534e5b4fb6e1c256c204372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114165855854261102
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986805788691272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e17dbb78f23f8143aef4d1b230e988b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114363433265744454
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986805788691272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027ce538c07638749a2ea23dcef4bee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114441345491401830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986805788691272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d77b2bfaa3f17f446a3f91bb9fabc26c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 0}
+  abilityName: Fireball
+  abilityTooltip: Shoot a ball of fire towards the cursor.
+  projectilePrefab: {fileID: 114661955022572828, guid: 54546675e33784a429402919b4924cbf,
+    type: 2}
+  origin: {fileID: 0}
+  velocity: 10
+  timeToLive: 5
+--- !u!114 &114860833782175640
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986805788691272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0c31d5799181040908ea654406a735, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raycastLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  groundMarker: {fileID: 0}
